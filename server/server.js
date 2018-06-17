@@ -13,6 +13,7 @@ AppLogger.stream = {
 //express config 
 import express from 'express'
 import cors from 'cors'
+import bodyParser from 'body-parser'
 
 //mongoose part
 import DBConnect from '../db/DBConnect'
@@ -24,6 +25,12 @@ const app = express()
 //configure app
 app.use('*', cors())
 app.use(morgan('dev', { 'stream': AppLogger.stream }))
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 //routes
 app.use('/app', AppRouter)

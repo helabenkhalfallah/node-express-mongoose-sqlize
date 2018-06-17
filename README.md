@@ -72,3 +72,6 @@ app.get('/', (req, res) => {
 ```
 
 -------- End Settings ------------
+
+18. add body-parser :
+npm install body-parser

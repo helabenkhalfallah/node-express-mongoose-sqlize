@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import AppLogger from '../core/logger/AppLogger'
 
 //promise
-mongoose.Promise = global.Promise
+mongoose.Promise = Promise
 
 //connect
 const DBConnect = async () => {
