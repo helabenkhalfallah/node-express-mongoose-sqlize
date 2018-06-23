@@ -14,8 +14,8 @@ MongoRouter.get('/users', (request, response) => {
 // add a user
 MongoRouter.post('/add-user', (request, response) => {
   // insert only if user not exist
-  let firstName = request.body.firstName || ''
-  MongoModels.UserModel.findOne({ firstName: firstName }, (error, user) => {
+  let email = request.body.email || ''
+  MongoModels.UserModel.findOne({ email: email }, (error, user) => {
     // insert only if user not exist
     if (error) {
       response.send(error)

@@ -1,24 +1,21 @@
 'use strict'
-import fs from 'fs'
-import path from 'path'
 import Sequelize from 'Sequelize'
 
-//psql db instance
-let PsqlDB = {}
-
 //configure psql db
-let basename = path.basename(__filename)
 let dbHost = process.env.PSQL_DB_HOST
 let dbName = process.env.PSQL_DB_NAME
 let dbPort = process.env.PSQL_DB_PORT
 let dbUser = process.env.PSQL_DB_USER
 let dbPassword = process.env.PSQL_DB_PASSWORD
+let dbDialect = process.env.PSQL_DB_DIALECT
 let sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   host: dbHost,
   port: dbPort,
-  dialect: 'postgres',
+  dialect: dbDialect,
   operatorsAliases: false,
-  logging: true,
+  define: {
+    underscored: true
+  },
   pool: {
     max: 5,
     min: 0,
@@ -27,23 +24,22 @@ let sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   },
 })
 
-fs.readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js')
-  })
-  .forEach(file => {
-    let model = sequelize['import'](path.join(__dirname, file))
-    PsqlDB[model.name] = model
-  })
+// Connect all the models/tables in 
+// the database to a db object,
+//so everything is accessible via one object
+let PsqlDB = {}
 
-Object.keys(PsqlDB).forEach(modelName => {
-  if (PsqlDB[modelName].associate) {
-    PsqlDB[modelName].associate(PsqlDB)
-  }
-})
-
-PsqlDB.sequelize = sequelize
 PsqlDB.Sequelize = Sequelize
+PsqlDB.sequelize = sequelize
+
+//Models/tables
+// PsqlDB.owners = require('../models/owners.js')(sequelize, Sequelize)
+PsqlDB.users = require('./UserEntity')(sequelize, Sequelize)
+
+//Relations
+// PsqlDB.pets.belongsTo(PsqlDB.owners)
+// PsqlDB.owners.hasMany(PsqlDB.pets)
+
 
 export default PsqlDB
 

@@ -48,6 +48,9 @@ if (process.env.MONGOOSE_ENABLED) {
   app.use('/app/psql', PsqlRouter)
 }
 
+AppLogger.debug('server PSQL_ENABLED')
+app.use('/app/psql', PsqlRouter)
+
 //route index
 app.get('/', (req, res) => {
   res.send('Invalid endpoint!')
