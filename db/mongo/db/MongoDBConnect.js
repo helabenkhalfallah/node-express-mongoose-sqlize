@@ -1,12 +1,12 @@
 //mongoose part
 import mongoose from 'mongoose'
-import AppLogger from '../core/logger/AppLogger'
+import AppLogger from '../../../core/logger/AppLogger'
 
 //promise
 mongoose.Promise = Promise
 
 //connect
-const DBConnect = async () => {
+const MongoDBConnect = async () => {
   let dbHost = process.env.MONGOOSE_DB_HOST
   let dbPort = process.env.MONGOOSE_DB_PORT
   let dbName = process.env.MONGOOSE_DB_NAME
@@ -19,4 +19,4 @@ const DBConnect = async () => {
   }
 }
 
-export default DBConnect
+export default MongoDBConnect

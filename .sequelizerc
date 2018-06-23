@@ -1,0 +1,7 @@
+import path from 'path'
+
+module.exports = {
+  'migrations-path': path.resolve('./db/psql', 'migrations'),
+  'models-path': path.resolve('./db/psql', 'models'),
+  'seeders-path': path.resolve('./db/psql', 'seeders')
+}

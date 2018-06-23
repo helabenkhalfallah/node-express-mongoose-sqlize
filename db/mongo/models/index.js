@@ -1,7 +1,7 @@
 import UserModel from './UserModel'
 
-let AppModels = {
+let MongoModels = {
   UserModel,
 }
 
-export default AppModels
+export default MongoModels

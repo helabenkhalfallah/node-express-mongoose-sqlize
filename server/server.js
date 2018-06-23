@@ -1,5 +1,10 @@
+//express config 
+import express from 'express'
+import cors from 'cors'
+import bodyParser from 'body-parser'
+
 //import router 
-import AppRouter from '../routes/AppRouter'
+import MongoRouter from '../routes/MongoRouter'
 
 //import logger
 import AppLogger from '../core/logger/AppLogger'
@@ -10,14 +15,13 @@ AppLogger.stream = {
   }
 }
 
-//express config 
-import express from 'express'
-import cors from 'cors'
-import bodyParser from 'body-parser'
+// database part
+import MongoDBConnect from '../db/mongo/db/MongoDBConnect'
+if (process.env.MONGOOSE_ENABLED) {
+  AppLogger.debug('server MONGOOSE_ENABLED')
+  MongoDBConnect()
+}
 
-//mongoose part
-import DBConnect from '../db/DBConnect'
-DBConnect()
 
 // Create an express instance
 const app = express()
@@ -32,8 +36,15 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-//routes
-app.use('/app', AppRouter)
+//app routes
+if (process.env.MONGOOSE_ENABLED) {
+  //mongo routes
+  AppLogger.debug('server MONGOOSE_ENABLED')
+  app.use('/app/mongo', MongoRouter)
+} else if (process.env.PSQL_ENABLED) {
+  //psql routes
+  AppLogger.debug('server PSQL_ENABLED')
+}
 
 //route index
 app.get('/', (req, res) => {

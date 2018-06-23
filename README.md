@@ -75,3 +75,8 @@ app.get('/', (req, res) => {
 
 18. add body-parser :
 npm install body-parser
+
+19. install sequelize
+http://docs.sequelizejs.com/manual/installation/getting-started.html
+yarn add sequelize
+yarn add pg pg-hstore 

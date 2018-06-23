@@ -30,6 +30,9 @@
     "express": "^4.16.3",
     "mongoose": "^5.1.5",
     "morgan": "^1.9.0",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.38.0",
     "winston": "^3.0.0",
     "winston-daily-rotate-file": "^3.2.1"
   },
