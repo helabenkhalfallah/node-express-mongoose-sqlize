@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 
 //import router 
 import MongoRouter from '../routes/MongoRouter'
+import PsqlRouter from '../routes/PsqlRouter'
 
 //import logger
 import AppLogger from '../core/logger/AppLogger'
@@ -44,6 +45,7 @@ if (process.env.MONGOOSE_ENABLED) {
 } else if (process.env.PSQL_ENABLED) {
   //psql routes
   AppLogger.debug('server PSQL_ENABLED')
+  app.use('/app/psql', PsqlRouter)
 }
 
 //route index
