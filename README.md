@@ -129,7 +129,7 @@ PSQL_DB_DIALECT =  postgres
 PSQL_DB_NAME =  appsqlizepsqldb
 ```
 
-sequelize is only need for migration command, be careful to update it when env confs change.
+sequelize conf file is only need for migration command, be careful to update it when env confs change.
 
 
 
