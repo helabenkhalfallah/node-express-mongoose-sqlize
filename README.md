@@ -80,3 +80,6 @@ npm install body-parser
 http://docs.sequelizejs.com/manual/installation/getting-started.html
 yarn add sequelize
 yarn add pg pg-hstore 
+
+20. adding lodash 
+yarn add lodash
