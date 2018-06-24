@@ -130,6 +130,7 @@ PSQL_DB_NAME =  appsqlizepsqldb
 ```
 
 sequelize conf file is only need for migration command, be careful to update it when env confs change.
-
-
-
+ 
+23. important folders :
+Routes : / routes
+dbs configs, connections and models : /db  
