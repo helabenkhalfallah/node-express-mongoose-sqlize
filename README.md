@@ -78,8 +78,58 @@ npm install body-parser
 
 19. install sequelize
 http://docs.sequelizejs.com/manual/installation/getting-started.html
+
 yarn add sequelize
 yarn add pg pg-hstore 
 
 20. adding lodash 
 yarn add lodash
+
+
+21. configure sequelize
+
+Add .sequelizerc on which you define sequelize path for configuration :
+```js
+var path = require('path');
+module.exports = {
+  'config': path.resolve('./db/psql/config', 'config.json'),
+  'migrations-path': path.resolve('./db/psql', 'migrations'),
+  'models-path': path.resolve('./db/psql', 'models'),
+  'seeders-path': path.resolve('./db/psql', 'seeders')
+}
+```
+
+Add new model :
+```js
+node_modules/.bin/sequelize model:create --name UserEntity --attributes "firstName: string, lastName: string, email: string,birthday: date, job: string, created_at : date, updated_at : date"
+```
+
+This will generate : 
+a UserEntity file under models folder.
+a migrations file under migrations folder.
+
+run below command to create table :
+```js
+node_modules/.bin/sequelize db:migrate
+```
+
+22. I choose to put all db config inside .env file :
+```js
+// mongoose const
+MONGOOSE_DB_HOST = 127.0.0.1 
+MONGOOSE_DB_PORT = 27017 
+MONGOOSE_DB_NAME =  local
+
+// psql const
+PSQL_DB_PORT = 5432 
+PSQL_DB_HOST = 127.0.0.1 
+PSQL_DB_USER =  admin
+PSQL_DB_PASSWORD =  admin
+PSQL_DB_DIALECT =  postgres
+PSQL_DB_NAME =  appsqlizepsqldb
+```
+
+sequelize is only need for migration command, be careful to update it when env confs change.
+
+
+

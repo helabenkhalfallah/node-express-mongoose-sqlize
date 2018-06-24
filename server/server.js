@@ -18,7 +18,7 @@ AppLogger.stream = {
 
 // database part
 import MongoDBConnect from '../db/mongo/db/MongoDBConnect'
-if (process.env.MONGOOSE_ENABLED) {
+if (process.env.MONGOOSE_ENABLED == true) {
   AppLogger.debug('server MONGOOSE_ENABLED')
   MongoDBConnect()
 }
@@ -38,11 +38,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 //app routes
-if (process.env.MONGOOSE_ENABLED) {
+if (process.env.MONGOOSE_ENABLED == true) {
   //mongo routes
   AppLogger.debug('server MONGOOSE_ENABLED')
   app.use('/app/mongo', MongoRouter)
-} else if (process.env.PSQL_ENABLED) {
+} else if (process.env.PSQL_ENABLED == true) {
   //psql routes
   AppLogger.debug('server PSQL_ENABLED')
   app.use('/app/psql', PsqlRouter)
