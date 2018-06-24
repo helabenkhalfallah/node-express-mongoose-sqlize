@@ -79,7 +79,7 @@ npm install body-parser
 19. install sequelize
 http://docs.sequelizejs.com/manual/installation/getting-started.html
 
-yarn add sequelize
+yarn add sequelize-cli sequelize
 yarn add pg pg-hstore 
 
 20. adding lodash 
