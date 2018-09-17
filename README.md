@@ -134,3 +134,11 @@ sequelize conf file is only need for migration command, be careful to update it 
 23. important folders :
 Routes : / routes
 dbs configs, connections and models : /db  
+
+24. add jsonwebtoken
+npm install jsonwebtoken --save
+
+25. add unit test :
+yarn add mocha chai sinon sinon-mongoose
+
+

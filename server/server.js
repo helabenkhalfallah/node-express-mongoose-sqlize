@@ -3,6 +3,9 @@ import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
+// used to create, sign, and verify tokens
+// import JWT from 'jsonwebtoken'
+
 //import router 
 import MongoRouter from '../routes/MongoRouter'
 import PsqlRouter from '../routes/PsqlRouter'
@@ -18,7 +21,7 @@ AppLogger.stream = {
 
 // database part
 import MongoDBConnect from '../db/mongo/db/MongoDBConnect'
-if (process.env.MONGOOSE_ENABLED == true) {
+if (process.env.MONGOOSE_ENABLED === 'true') {
   AppLogger.debug('server MONGOOSE_ENABLED')
   MongoDBConnect()
 }
@@ -38,18 +41,16 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 //app routes
-if (process.env.MONGOOSE_ENABLED == true) {
+if (process.env.MONGOOSE_ENABLED === 'true') {
   //mongo routes
   AppLogger.debug('server MONGOOSE_ENABLED')
   app.use('/app/mongo', MongoRouter)
-} else if (process.env.PSQL_ENABLED == true) {
+}
+if (process.env.PSQL_ENABLED === 'true') {
   //psql routes
   AppLogger.debug('server PSQL_ENABLED')
   app.use('/app/psql', PsqlRouter)
 }
-
-AppLogger.debug('server PSQL_ENABLED')
-app.use('/app/psql', PsqlRouter)
 
 //route index
 app.get('/', (req, res) => {

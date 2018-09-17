@@ -1,39 +1,26 @@
 import express from 'express'
-import AppLogger from '../core/logger/AppLogger'
-import MongoModels from '../db/mongo/models'
+import UserController from '../controllers/mongo/UserController'
 const MongoRouter = express.Router()
+import AppLogger from '../core/logger/AppLogger'
 
 // get users list
 MongoRouter.get('/users', (request, response) => {
-  MongoModels.UserModel.find((error, users) => {
-    if (error) response.send(error)
-    else response.send(users)
-  })
+  UserController.find(request, response)
 })
 
 // add a user
 MongoRouter.post('/add-user', (request, response) => {
-  // insert only if user not exist
-  let email = request.body.email || ''
-  MongoModels.UserModel.findOne({ email: email }, (error, user) => {
-    // insert only if user not exist
-    if (error) {
-      response.send(error)
-    } else {
-      if (!user) {
-        const userModel = new MongoModels.UserModel(request.body)
-        userModel.save((error) => {
-          if (error) {
-            response.send(error)
-          } else {
-            response.send(userModel)
-          }
-        })
-      } else {
-        response.send('user exist')
-      }
-    }
-  })
+  UserController.addIfNotExist(request, response)
+})
+
+// update a user if exist
+MongoRouter.post('/update-user', (request, response) => {
+  UserController.updateIfExist(request, response)
+})
+
+// delete a user if exist
+MongoRouter.post('/delete-user', (request, response) => {
+  UserController.deleteIfExist(request, response)
 })
 
 // get photos list

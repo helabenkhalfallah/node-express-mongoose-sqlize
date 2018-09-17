@@ -14,8 +14,8 @@ const MongoDBConnect = async () => {
     await mongoose.connect(`mongodb://${dbHost}:${dbPort}/${dbName}`)
     AppLogger.debug('Connected to mongo!!!')
   }
-  catch (err) {
-    AppLogger.error('Could not connect to MongoDB')
+  catch (error) {
+    AppLogger.error('Could not connect to MongoDB', error)
   }
 }
 
