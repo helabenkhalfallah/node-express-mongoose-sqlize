@@ -1,11 +1,13 @@
 import express from 'express'
 import { isEmpty } from 'lodash'
-import AppLogger from '../core/logger/AppLogger'
-import PsqlDB from '../db/psql/models'
-const PsqlRouter = express.Router()
+import AppLogger from '../../core/logger/AppLogger'
+import PsqlDB from '../../db/psql/models'
+
+// express router
+const PsqlUserRouter = express.Router()
 
 // retrieve all users
-PsqlRouter.get('/users', (request, response) => {
+PsqlUserRouter.get('/users', (request, response) => {
   PsqlDB.users.findAll().then(users => {
     // retrieve all users
     response.send(users)
@@ -17,7 +19,7 @@ PsqlRouter.get('/users', (request, response) => {
 })
 
 // get user by id
-PsqlRouter.post('/user-id', (request, response) => {
+PsqlUserRouter.post('/user-id', (request, response) => {
   let userId = request.body.id || ''
   PsqlDB.users.findById(userId)
     .then(user => {
@@ -36,7 +38,7 @@ PsqlRouter.post('/user-id', (request, response) => {
 })
 
 // get user by email
-PsqlRouter.post('/user-email', (request, response) => {
+PsqlUserRouter.post('/user-email', (request, response) => {
   let email = request.body.email || ''
   PsqlDB.users.findOne({
     where: {
@@ -59,7 +61,7 @@ PsqlRouter.post('/user-email', (request, response) => {
 })
 
 // add a user
-PsqlRouter.post('/add-user', (request, response) => {
+PsqlUserRouter.post('/add-user', (request, response) => {
   // insert only if user not exist
   // date format should been 1984-09-28
   let firstName = request.body.firstName || ''
@@ -102,7 +104,7 @@ PsqlRouter.post('/add-user', (request, response) => {
 })
 
 // edit a user by email key
-PsqlRouter.post('/edit-user-email', (request, response) => {
+PsqlUserRouter.post('/edit-user-email', (request, response) => {
   // edit only if user exist
   // date format should been 1984-09-28
   let firstName = request.body.firstName || ''
@@ -164,7 +166,7 @@ PsqlRouter.post('/edit-user-email', (request, response) => {
 })
 
 // delete a user by id key
-PsqlRouter.post('/delete-user-id', (request, response) => {
+PsqlUserRouter.post('/delete-user-id', (request, response) => {
   let userId = request.body.id || ''
   PsqlDB.users.findById(userId)
     .then(user => {
@@ -195,7 +197,7 @@ PsqlRouter.post('/delete-user-id', (request, response) => {
 
 
 // delete a user by email key
-PsqlRouter.post('/delete-user-email', (request, response) => {
+PsqlUserRouter.post('/delete-user-email', (request, response) => {
   let email = request.body.email || ''
   PsqlDB.users.findOne({
     where: {
@@ -228,4 +230,4 @@ PsqlRouter.post('/delete-user-email', (request, response) => {
     })
 })
 
-export default PsqlRouter
+export default PsqlUserRouter

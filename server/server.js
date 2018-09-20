@@ -2,13 +2,13 @@
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-
-// used to create, sign, and verify tokens
-// import JWT from 'jsonwebtoken'
+import cookieParser from 'cookie-parser'
+import passport from 'passport'
 
 //import router 
-import MongoRouter from '../routes/MongoRouter'
-import PsqlRouter from '../routes/PsqlRouter'
+import MgUserRouter from '../routes/mongo/MgUserRouter'
+import PsqlUserRouter from '../routes/psql/PsqlUserRouter'
+import AuthRouter from '../routes/auth/AuthRouter'
 
 //import logger
 import AppLogger from '../core/logger/AppLogger'
@@ -26,9 +26,11 @@ if (process.env.MONGOOSE_ENABLED === 'true') {
   MongoDBConnect()
 }
 
-
 // Create an express instance
 const app = express()
+
+// init cookie parser
+app.use(cookieParser())
 
 //configure app
 app.use('*', cors())
@@ -40,16 +42,23 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+// init and configure passport
+app.use(passport.initialize())
+
 //app routes
+// authentication routes
+app.use('/auth', AuthRouter)
+
+// others routes
 if (process.env.MONGOOSE_ENABLED === 'true') {
   //mongo routes
   AppLogger.debug('server MONGOOSE_ENABLED')
-  app.use('/app/mongo', MongoRouter)
+  app.use('/app/mongo/users', MgUserRouter)
 }
 if (process.env.PSQL_ENABLED === 'true') {
   //psql routes
   AppLogger.debug('server PSQL_ENABLED')
-  app.use('/app/psql', PsqlRouter)
+  app.use('/app/psql/users', PsqlUserRouter)
 }
 
 //route index
