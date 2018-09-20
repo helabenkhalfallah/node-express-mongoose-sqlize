@@ -14,7 +14,9 @@
   "keywords": [
     "express",
     "mongoose",
-    "sqlize"
+    "sqlize",
+    "passport",
+    "json web token"
   ],
   "author": "hela ben khalfallah",
   "license": "ISC",
