@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import MongoModels from '../../db/mongo/models'
-import UserController from '../mongo/UserController'
+import UserController from '../../mongo/controllers/UserController'
 
 const User = MongoModels.UserModel
 
@@ -54,13 +54,13 @@ const login = async (request, response) => {
             if (isMatch && !error) {
 
               // if user is found and password is right create a token
-              //algorithm: process.env.TOKEN_HASH_ALGO 
-              const token = jwt.sign(user.toJSON(), process.env.SECRET_OR_KEY, {
-                expiresIn: process.env.TOKEN_EXPIRATION
+              //algorithm: process.env.JWT_TOKEN_HASH_ALGO 
+              const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET_OR_KEY, {
+                expiresIn: process.env.JWT_TOKEN_EXPIRATION
               })
 
               // return the information including token as JSON
-              response.status(200).json({ success: true, user: user, token: 'JWT ' + token })
+              response.status(200).json({ success: true, user: user, token: process.env.JWT_TOKEN_PREFIX + token })
             } else {
               response.status(401).send({ success: false, message: 'Authentication failed. Wrong password.' })
             }

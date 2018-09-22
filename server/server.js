@@ -47,18 +47,18 @@ app.use(passport.initialize())
 
 //app routes
 // authentication routes
-app.use('/auth', AuthRouter)
+app.use(process.env.AUTH_BASE_PATH, AuthRouter)
 
 // others routes
 if (process.env.MONGOOSE_ENABLED === 'true') {
   //mongo routes
   AppLogger.debug('server MONGOOSE_ENABLED')
-  app.use('/app/mongo/users', MgUserRouter)
+  app.use(process.env.MONGO_USER_BASE_PATH, MgUserRouter)
 }
 if (process.env.PSQL_ENABLED === 'true') {
   //psql routes
   AppLogger.debug('server PSQL_ENABLED')
-  app.use('/app/psql/users', PsqlUserRouter)
+  app.use(process.env.PSQL_USER_BASE_PATH, PsqlUserRouter)
 }
 
 //route index

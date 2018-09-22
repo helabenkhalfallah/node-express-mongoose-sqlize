@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 // verify if token is valid
 const isValidToken = (token) => {
   try {
-    jwt.verify(token, process.env.SECRET_OR_KEY)
+    jwt.verify(token, process.env.JWT_SECRET_OR_KEY)
     return true
   } catch (error) {
     // error

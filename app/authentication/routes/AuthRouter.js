@@ -1,16 +1,16 @@
 import express from 'express'
-import AuthController from '../../controllers/authentication/AuthController'
+import AuthController from '../controllers/AuthController'
 
 // router instance
 const AuthRouter = express.Router()
 
 // authentication : register
-AuthRouter.post('/register', (req, res) => {
+AuthRouter.post(process.env.AUTH_REGISTER_PATH, (req, res) => {
   AuthController.register(req, res)
 })
 
 // authentication : login
-AuthRouter.post('/login', (req, res, next) => {
+AuthRouter.post(process.env.AUTH_LOGIN_PATH, (req, res, next) => {
   AuthController.login(req, res, next)
 })
 

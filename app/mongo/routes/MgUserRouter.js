@@ -9,7 +9,7 @@ require('../../passport/passeport')(passport)
 const MgUserRouter = express.Router()
 
 // get users list
-MgUserRouter.get('/users-list', passport.authenticate('jwt', { session: false }), (request, response) => {
+MgUserRouter.get(process.env.USER_LIST_PATH, passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
   const token = AuthUtils.retrieveToken(request.headers)
   if (AuthUtils.isValidToken(token)) {
     // valid token
@@ -21,7 +21,7 @@ MgUserRouter.get('/users-list', passport.authenticate('jwt', { session: false })
 })
 
 // add a user
-MgUserRouter.post('/add-user', passport.authenticate('jwt', { session: false }), (request, response) => {
+MgUserRouter.post(process.env.USER_LIST_PATH, passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
   const token = AuthUtils.retrieveToken(request.headers)
   if (AuthUtils.isValidToken(token)) {
     // valid token
@@ -33,7 +33,7 @@ MgUserRouter.post('/add-user', passport.authenticate('jwt', { session: false }),
 })
 
 // update a user if exist
-MgUserRouter.post('/update-user', passport.authenticate('jwt', { session: false }), (request, response) => {
+MgUserRouter.post(process.env.USER_UPDATE_PATH, passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
   UserController.updateIfExist(request, response)
   const token = AuthUtils.retrieveToken(request.headers)
   if (AuthUtils.isValidToken(token)) {
@@ -46,7 +46,7 @@ MgUserRouter.post('/update-user', passport.authenticate('jwt', { session: false 
 })
 
 // delete a user if exist
-MgUserRouter.post('/delete-user', passport.authenticate('jwt', { session: false }), (request, response) => {
+MgUserRouter.post(process.env.USER_DELETE_PATH, passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
   const token = AuthUtils.retrieveToken(request.headers)
   if (AuthUtils.isValidToken(token)) {
     // valid token
@@ -58,7 +58,7 @@ MgUserRouter.post('/delete-user', passport.authenticate('jwt', { session: false 
 })
 
 // returns the user that made the request
-MgUserRouter.get('/profile', passport.authenticate('jwt', { session: false }), (request, response) => {
+MgUserRouter.get(process.env.USER_PROFILE_PATH, passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
   const token = AuthUtils.retrieveToken(request.headers)
   if (AuthUtils.isValidToken(token)) {
     // valid token

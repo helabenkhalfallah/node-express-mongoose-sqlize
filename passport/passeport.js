@@ -10,8 +10,8 @@ const User = MongoModels.UserModel
 
 // define passeport jwt strategy
 let opts = {}
-opts.jwtFromRequest = ExtractJWT.fromAuthHeaderWithScheme('jwt')
-opts.secretOrKey = process.env.SECRET_OR_KEY
+opts.jwtFromRequest = ExtractJWT.fromAuthHeaderWithScheme(process.env.JWT_SCHEME)
+opts.secretOrKey = process.env.JWT_SECRET_OR_KEY
 const passeportJWTStrategy = new JWTStrategy(opts, function (jwt_payload, done) {
   const email = jwt_payload.email
   User.findOne({ email: email }, (error, user) => {
