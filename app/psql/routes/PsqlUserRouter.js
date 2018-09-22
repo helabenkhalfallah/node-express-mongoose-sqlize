@@ -5,32 +5,32 @@ import UserController from '../controllers/UserController'
 const PsqlUserRouter = express.Router()
 
 // retrieve all users
-PsqlUserRouter.get('/users', (request, response) => {
+PsqlUserRouter.get(process.env.USER_LIST_PATH, (request, response) => {
   UserController.find(request, response)
 })
 
 // get user by id
-PsqlUserRouter.post('/user-id', (request, response) => {
+PsqlUserRouter.post(process.env.USER_PROFILE_ID_PATH, (request, response) => {
   UserController.findById(request, response)
 })
 
 // get user by email
-PsqlUserRouter.post('/user-email', (request, response) => {
+PsqlUserRouter.post(process.env.USER_PROFILE_EMAIL_PATH, (request, response) => {
   UserController.findByEmail(request, response)
 })
 
 // add a user
-PsqlUserRouter.post('/add-user', (request, response) => {
+PsqlUserRouter.post(process.env.USER_ADD_PATH, (request, response) => {
   UserController.addIfNotExist(request, response)
 })
 
 // update a user by email key
-PsqlUserRouter.post('/update-user', (request, response) => {
+PsqlUserRouter.post(process.env.USER_UPDATE_PATH, (request, response) => {
   UserController.updateIfExist(request, response)
 })
 
 // delete a user by email key
-PsqlUserRouter.post('/delete-user', (request, response) => {
+PsqlUserRouter.post(process.env.USER_DELETE_PATH, (request, response) => {
   UserController.deleteIfExist(request, response)
 })
 

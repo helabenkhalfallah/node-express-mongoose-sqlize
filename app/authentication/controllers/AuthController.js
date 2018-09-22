@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import MongoModels from '../../db/mongo/models'
+import MongoModels from '../../mongo/db/models/index'
 import UserController from '../../mongo/controllers/UserController'
 import MesssageProvider from '../../../messages/MesssageProvider'
 import Messages from '../../../messages/Messages'

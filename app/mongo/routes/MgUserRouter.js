@@ -1,13 +1,13 @@
 import express from 'express'
-import UserController from '../../controllers/mongo/UserController'
-import AuthUtils from '../../utils/AuthUtils'
+import UserController from '../controllers/UserController'
+import AuthUtils from '../../authentication/utils/AuthUtils'
 import passport from 'passport'
 import MesssageProvider from '../../../messages/MesssageProvider'
 import Messages from '../../../messages/Messages'
 
 
 // router instance  
-require('../../passport/passeport')(passport)
+require('../../../passport/passeport')(passport)
 const MgUserRouter = express.Router()
 
 // get users list
@@ -29,7 +29,7 @@ MgUserRouter.get(process.env.USER_LIST_PATH,
   })
 
 // add a user
-MgUserRouter.post(process.env.USER_LIST_PATH,
+MgUserRouter.post(process.env.USER_ADD_PATH,
   passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
     const token = AuthUtils.retrieveToken(request.headers)
     if (AuthUtils.isValidToken(token)) {

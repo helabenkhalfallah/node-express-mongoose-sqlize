@@ -1,5 +1,5 @@
-import AppLogger from '../../core/logger/AppLogger'
-import PsqlDB from '../../db/psql/models'
+import AppLogger from '../../../core/logger/AppLogger'
+import PsqlDB from '../db/models/index'
 import { isEmpty } from 'lodash'
 
 // retreive all user

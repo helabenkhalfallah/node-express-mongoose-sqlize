@@ -1,5 +1,5 @@
 import passportJWT from 'passport-jwt'
-import MongoModels from '../db/mongo/models'
+import MongoModels from '../app/mongo/db/models/index'
 
 // passport & jwt config
 const JWTStrategy = passportJWT.Strategy

@@ -1,6 +1,6 @@
 //mongoose part
 import mongoose from 'mongoose'
-import AppLogger from '../../../core/logger/AppLogger'
+import AppLogger from '../../../../core/logger/AppLogger'
 
 //promise
 mongoose.Promise = Promise

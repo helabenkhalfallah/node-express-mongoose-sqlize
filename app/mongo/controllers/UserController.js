@@ -1,4 +1,4 @@
-import MongoModels from '../../db/mongo/models'
+import MongoModels from '../db/models/index'
 import MesssageProvider from '../../../messages/MesssageProvider'
 import Messages from '../../../messages/Messages'
 

@@ -6,9 +6,9 @@ import cookieParser from 'cookie-parser'
 import passport from 'passport'
 
 //import router 
-import MgUserRouter from '../routes/mongo/MgUserRouter'
-import PsqlUserRouter from '../routes/psql/PsqlUserRouter'
-import AuthRouter from '../routes/auth/AuthRouter'
+import MgUserRouter from '../app/mongo/routes/MgUserRouter'
+import PsqlUserRouter from '../app/psql/routes/PsqlUserRouter'
+import AuthRouter from '../app/authentication/routes/AuthRouter'
 
 //import logger
 import AppLogger from '../core/logger/AppLogger'
@@ -20,7 +20,7 @@ AppLogger.stream = {
 }
 
 // database part
-import MongoDBConnect from '../db/mongo/db/MongoDBConnect'
+import MongoDBConnect from '../app/mongo/db/db/MongoDBConnect'
 if (process.env.MONGOOSE_ENABLED === 'true') {
   AppLogger.debug('server MONGOOSE_ENABLED')
   MongoDBConnect()
