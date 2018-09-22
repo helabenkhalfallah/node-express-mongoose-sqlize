@@ -1,16 +1,29 @@
+import { isEmpty } from 'lodash'
 import AppLogger from '../../../core/logger/AppLogger'
 import PsqlDB from '../db/models/index'
-import { isEmpty } from 'lodash'
+import MesssageProvider from '../../../messages/MesssageProvider'
+import Messages from '../../../messages/Messages'
+
 
 // retreive all user
 const find = (request, response) => {
   PsqlDB.users.findAll().then(users => {
     // retrieve all users
-    response.send(users)
+    response
+      .status(200)
+      .send({
+        success: true,
+        users: users
+      })
   }).catch((error) => {
     // return error
     AppLogger.info('PsqlRouter findAll error : ' + error)
-    response.send(error)
+    response
+      .status(401)
+      .send({
+        success: false,
+        message: error.message
+      })
   })
 }
 
@@ -22,14 +35,30 @@ const findById = (request, response) => {
       // retrieve all users
       AppLogger.info('PsqlRouter find by id user : ' + user)
       if (user) {
-        response.send(user)
+        response
+          .status(200)
+          .send({
+            success: true,
+            user: user
+          })
       } else {
-        response.send({ error: { message: 'Cannot find user with id : ' + userId } })
+        response
+          .status(401)
+          .send({
+            success: false,
+            message: MesssageProvider
+              .messageByKey(Messages.KEYS.USER_ID_NOT_FOUND)
+          })
       }
     }).catch((error) => {
       // return error
       AppLogger.info('PsqlRouter find by id error : ' + error)
-      response.send(error)
+      response
+        .status(401)
+        .send({
+          success: false,
+          message: error.message
+        })
     })
 }
 
@@ -45,14 +74,30 @@ const findByEmail = (request, response) => {
       // retrieve all users
       AppLogger.info('PsqlRouter find by email user : ' + user)
       if (user) {
-        response.send(user)
+        response
+          .status(200)
+          .send({
+            success: true,
+            user: user
+          })
       } else {
-        response.send({ error: { message: 'Cannot find user with email : ' + email } })
+        response
+          .status(401)
+          .send({
+            success: false,
+            message: MesssageProvider
+              .messageByKey(Messages.KEYS.USER_EMAIL_NOT_FOUND)
+          })
       }
     }).catch((error) => {
       // return error
       AppLogger.info('PsqlRouter find by email error : ' + error)
-      response.send(error)
+      response
+        .status(401)
+        .send({
+          success: false,
+          message: error.message
+        })
     })
 }
 
@@ -83,20 +128,41 @@ const addIfNotExist = (request, response) => {
       }).then(user => {
         // send created customer to client
         AppLogger.info('PsqlRouter created user : ' + user)
-        response.json(user)
+        response
+          .status(200)
+          .send({
+            success: true,
+            user: user
+          })
       }).catch((error) => {
         // return error
         AppLogger.info('PsqlRouter created error : ' + error)
-        response.send(error)
+        response
+          .status(401)
+          .send({
+            success: false,
+            message: error.message
+          })
       })
     } else {
       AppLogger.info('PsqlRouter create user already exist  ')
-      response.send({ error: { message: 'User already exist' } })
+      response
+        .status(401)
+        .send({
+          success: false,
+          message: MesssageProvider
+            .messageByKey(Messages.KEYS.USER_ALREADY_EXIST)
+        })
     }
   }).catch((error) => {
     // return error
     AppLogger.info('PsqlRouter create error : ' + error)
-    response.send(error)
+    response
+      .status(401)
+      .send({
+        success: false,
+        message: error.message
+      })
   })
 }
 
@@ -141,25 +207,51 @@ const updateIfExist = (request, response) => {
           .then(user => {
             // retrieve all users
             AppLogger.info('PsqlRouter edited user result : ' + user)
-            response.send(user)
+            response
+              .status(200)
+              .send({
+                success: true,
+                user: user
+              })
           }).catch((error) => {
             // return error
             AppLogger.info('PsqlRouter edited user error: ' + error)
-            response.send(error)
+            response
+              .status(401)
+              .send({
+                success: false,
+                message: error.message
+              })
           })
       }).catch((error) => {
         // return error
         AppLogger.info('PsqlRouter edit error : ' + error)
-        response.send(error)
+        response
+          .status(401)
+          .send({
+            success: false,
+            message: error.message
+          })
       })
     } else {
       AppLogger.info('PsqlRouter edit user not exist  ')
-      response.send({ error: { message: 'Cannot find user with email ' + email } })
+      response
+        .status(401)
+        .send({
+          success: false,
+          message: MesssageProvider
+            .messageByKey(Messages.KEYS.USER_EMAIL_NOT_FOUND)
+        })
     }
   }).catch((error) => {
     // return error
     AppLogger.info('PsqlRouter edit error : ' + error)
-    response.send(error)
+    response
+      .status(401)
+      .send({
+        success: false,
+        message: error.message
+      })
   })
 }
 
@@ -181,19 +273,40 @@ const deleteIfExist = (request, response) => {
           }
         }).then(() => {
           AppLogger.info('PsqlRouter delete user by email success : ' + email)
-          response.send(user)
+          response
+            .status(200)
+            .send({
+              success: true,
+              user: user
+            })
         }).catch((error) => {
           // return error
           AppLogger.info('PsqlRouter delete user by email error : ' + error)
-          response.send(error)
+          response
+            .status(401)
+            .send({
+              success: false,
+              message: error.message
+            })
         })
       } else {
-        response.send({ error: { message: 'Cannot find user with email : ' + email } })
+        response
+          .status(401)
+          .send({
+            success: false,
+            message: MesssageProvider
+              .messageByKey(Messages.KEYS.USER_EMAIL_NOT_FOUND)
+          })
       }
     }).catch((error) => {
       // return error
       AppLogger.info('PsqlRouter delete by email error : ' + error)
-      response.send(error)
+      response
+        .status(401)
+        .send({
+          success: false,
+          message: error.message
+        })
     })
 }
 

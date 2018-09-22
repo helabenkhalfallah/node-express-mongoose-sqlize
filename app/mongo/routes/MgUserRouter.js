@@ -23,7 +23,7 @@ MgUserRouter.get(process.env.USER_LIST_PATH,
         .status(401)
         .send({
           success: false,
-          message: MesssageProvider.messageByKey(Messages.WRONG_SESSION)
+          message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION)
         })
     }
   })
@@ -41,7 +41,7 @@ MgUserRouter.post(process.env.USER_ADD_PATH,
         .status(401)
         .send({
           success: false,
-          message: MesssageProvider.messageByKey(Messages.WRONG_SESSION)
+          message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION)
         })
     }
   })
@@ -60,7 +60,7 @@ MgUserRouter.post(process.env.USER_UPDATE_PATH,
         .status(401)
         .send({
           success: false,
-          message: MesssageProvider.messageByKey(Messages.WRONG_SESSION)
+          message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION)
         })
     }
   })
@@ -78,7 +78,7 @@ MgUserRouter.post(process.env.USER_DELETE_PATH,
         .status(401)
         .send({
           success: false,
-          message: MesssageProvider.messageByKey(Messages.WRONG_SESSION)
+          message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION)
         })
     }
   })
@@ -96,7 +96,7 @@ MgUserRouter.get(process.env.USER_PROFILE_PATH,
         .status(401)
         .send({
           success: false,
-          message: MesssageProvider.messageByKey(Messages.WRONG_SESSION)
+          message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION)
         })
     }
   })

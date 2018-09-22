@@ -1,13 +1,14 @@
 // message manager
 import Messages from './Messages'
-import { _ } from 'lodash'
+import { find } from 'lodash'
 
 
 // get message by key
 const messageByKey = (key) => {
+  const language = 'en'
   if (key) {
-    const messages = Messages.filter(message => message.key === key)
-    return _.get(messages, 'messages[0]', '')
+    const message = find(Messages.DATA, { 'key': key, 'language': language })
+    return message ? message.value : ''
   }
   return ''
 }

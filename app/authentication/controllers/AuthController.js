@@ -38,7 +38,7 @@ const register = (request, response) => {
               response
                 .status(200)
                 .send({
-                  success: false,
+                  success: true,
                   user: userModel
                 })
             }
@@ -49,7 +49,7 @@ const register = (request, response) => {
             .send({
               success: false,
               message: MesssageProvider
-                .messageByKey(Messages.USER_ALREADY_EXIST)
+                .messageByKey(Messages.KEYS.USER_ALREADY_EXIST)
             })
         }
       }
@@ -60,7 +60,7 @@ const register = (request, response) => {
       .send({
         success: false,
         message: MesssageProvider
-          .messageByKey(Messages.VERIFY_REQUIRED_INFORMATION)
+          .messageByKey(Messages.KEYS.VERIFY_REQUIRED_INFORMATION)
       })
   }
 }
@@ -82,7 +82,7 @@ const login = async (request, response) => {
           response.status(401).send({
             success: false,
             message: MesssageProvider
-              .messageByKey(Messages.USER_NOT_EXIST)
+              .messageByKey(Messages.KEYS.USER_NOT_EXIST)
           })
         } else {
           // check if password matches 
@@ -109,7 +109,7 @@ const login = async (request, response) => {
                 .send({
                   success: false,
                   message: MesssageProvider
-                    .messageByKey(Messages.WRONG_PASSWORD)
+                    .messageByKey(Messages.KEYS.WRONG_PASSWORD)
                 })
             }
           })
@@ -122,7 +122,7 @@ const login = async (request, response) => {
       .send({
         success: false,
         message: MesssageProvider
-          .messageByKey(Messages.VERIFY_REQUIRED_INFORMATION)
+          .messageByKey(Messages.KEYS.VERIFY_REQUIRED_INFORMATION)
       })
   }
 }

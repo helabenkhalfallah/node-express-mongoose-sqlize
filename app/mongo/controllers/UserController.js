@@ -32,8 +32,20 @@ const UserFromRequest = (request) => {
 // retreive all user
 const find = (request, response) => {
   User.find((error, users) => {
-    if (error) response.send(error)
-    else response.send(users)
+    if (!error)
+      response
+        .status(200)
+        .send({
+          success: true,
+          users: users
+        })
+    else
+      response
+        .status(401)
+        .send({
+          success: false,
+          message: error.message
+        })
   })
 }
 
@@ -48,7 +60,12 @@ const addIfNotExist = (request, response) => {
     User.findOne({ email: email }, (error, user) => {
       // insert only if user not exist
       if (error) {
-        response.send(error)
+        response
+          .status(401)
+          .send({
+            success: false,
+            message: error.message
+          })
       } else {
         if (!user) {
           const userModel = UserFromRequest(request)
@@ -64,7 +81,7 @@ const addIfNotExist = (request, response) => {
               response
                 .status(200)
                 .send({
-                  success: false,
+                  success: true,
                   user: userModel
                 })
             }
@@ -75,7 +92,7 @@ const addIfNotExist = (request, response) => {
             .send({
               success: false,
               message: MesssageProvider
-                .messageByKey(Messages.USER_ALREADY_EXIST)
+                .messageByKey(Messages.KEYS.USER_ALREADY_EXIST)
             })
         }
       }
@@ -86,7 +103,7 @@ const addIfNotExist = (request, response) => {
       .send({
         success: false,
         message: MesssageProvider
-          .messageByKey(Messages.VERIFY_REQUIRED_INFORMATION)
+          .messageByKey(Messages.KEYS.VERIFY_REQUIRED_INFORMATION)
       })
   }
 }
