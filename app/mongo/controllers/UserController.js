@@ -1,4 +1,7 @@
 import MongoModels from '../../db/mongo/models'
+import MesssageProvider from '../../../messages/MesssageProvider'
+import Messages from '../../../messages/Messages'
+
 
 const User = MongoModels.UserModel
 
@@ -51,18 +54,40 @@ const addIfNotExist = (request, response) => {
           const userModel = UserFromRequest(request)
           userModel.save((error) => {
             if (error) {
-              response.send(error)
+              response
+                .status(401)
+                .send({
+                  success: false,
+                  message: error.message
+                })
             } else {
-              response.send(userModel)
+              response
+                .status(200)
+                .send({
+                  success: false,
+                  user: userModel
+                })
             }
           })
         } else {
-          response.send('user exist')
+          response
+            .status(401)
+            .send({
+              success: false,
+              message: MesssageProvider
+                .messageByKey(Messages.USER_ALREADY_EXIST)
+            })
         }
       }
     })
   } else {
-    response.send('Please, verify the required information')
+    return response
+      .status(401)
+      .send({
+        success: false,
+        message: MesssageProvider
+          .messageByKey(Messages.VERIFY_REQUIRED_INFORMATION)
+      })
   }
 }
 

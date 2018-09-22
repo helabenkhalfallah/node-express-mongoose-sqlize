@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken'
 import MongoModels from '../../db/mongo/models'
 import UserController from '../../mongo/controllers/UserController'
+import MesssageProvider from '../../../messages/MesssageProvider'
+import Messages from '../../../messages/Messages'
 
 const User = MongoModels.UserModel
 
@@ -15,24 +17,51 @@ const register = (request, response) => {
     User.findOne({ email: email }, (error, user) => {
       // insert only if user not exist
       if (error) {
-        response.status(401).json({ success: false, message: error.message })
+        response
+          .status(401)
+          .send({
+            success: false,
+            message: error.message
+          })
       } else {
         if (!user) {
           const userModel = UserController.UserFromRequest(request)
           userModel.save((error) => {
             if (error) {
-              response.status(401).json({ success: false, message: error.message })
+              response
+                .status(401)
+                .send({
+                  success: false,
+                  message: error.message
+                })
             } else {
-              response.status(200).send({ success: false, user: userModel })
+              response
+                .status(200)
+                .send({
+                  success: false,
+                  user: userModel
+                })
             }
           })
         } else {
-          response.status(401).send({ success: false, message: 'User already exist.' })
+          response
+            .status(401)
+            .send({
+              success: false,
+              message: MesssageProvider
+                .messageByKey(Messages.USER_ALREADY_EXIST)
+            })
         }
       }
     })
   } else {
-    return response.status(401).json({ success: false, message: 'Please verify required information.' })
+    return response
+      .status(401)
+      .send({
+        success: false,
+        message: MesssageProvider
+          .messageByKey(Messages.VERIFY_REQUIRED_INFORMATION)
+      })
   }
 }
 
@@ -44,10 +73,17 @@ const login = async (request, response) => {
     User.findOne({ email: email }, (error, user) => {
       // insert only if user not exist 
       if (error) {
-        response.status(401).json({ success: false, message: error.message })
+        response.status(401).send({
+          success: false,
+          message: error.message
+        })
       } else {
         if (!user) {
-          response.status(401).json({ success: false, message: 'User not exist.' })
+          response.status(401).send({
+            success: false,
+            message: MesssageProvider
+              .messageByKey(Messages.USER_NOT_EXIST)
+          })
         } else {
           // check if password matches 
           user.comparePassword(password, (error, isMatch) => {
@@ -60,16 +96,34 @@ const login = async (request, response) => {
               })
 
               // return the information including token as JSON
-              response.status(200).json({ success: true, user: user, token: process.env.JWT_TOKEN_PREFIX + token })
+              response
+                .status(200)
+                .send({
+                  success: true,
+                  user: user,
+                  token: process.env.JWT_TOKEN_PREFIX + token
+                })
             } else {
-              response.status(401).send({ success: false, message: 'Authentication failed. Wrong password.' })
+              response
+                .status(401)
+                .send({
+                  success: false,
+                  message: MesssageProvider
+                    .messageByKey(Messages.WRONG_PASSWORD)
+                })
             }
           })
         }
       }
     })
   } else {
-    return response.status(401).json({ success: false, message: 'Please verify required information.' })
+    return response
+      .status(401)
+      .send({
+        success: false,
+        message: MesssageProvider
+          .messageByKey(Messages.VERIFY_REQUIRED_INFORMATION)
+      })
   }
 }
 
