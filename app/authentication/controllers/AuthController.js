@@ -101,7 +101,7 @@ const login = async (request, response) => {
                 .send({
                   success: true,
                   user: user,
-                  token: process.env.JWT_TOKEN_PREFIX + token
+                  token: `${process.env.JWT_TOKEN_PREFIX} ${token}`
                 })
             } else {
               response
