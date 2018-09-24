@@ -166,4 +166,81 @@ const passeportJWTStrategy = new JWTStrategy(opts, function (jwt_payload, done) 
 })
 ```
 
+28. Configure server to user passport :
+```js
+import passport from 'passport'
+
+// init and configure passport
+app.use(passport.initialize())
+```
+
+29. secure Routers :
+```js 
+MgUserRouter.get(process.env.USER_LIST_PATH,
+  passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
+    const token = AuthUtils.retrieveToken(request.headers)
+    if (AuthUtils.isValidToken(token)) {
+      // valid token
+      UserController.find(request, response)
+    } else {
+      // invalid token
+      response
+        .status(401)
+        .send({
+          success: false,
+          message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION)
+        })
+    }
+  })
+```
+
+30. configure server auth router to use auth middleware :
+```js
+//app routes
+// authentication routes
+app.use(process.env.AUTH_BASE_PATH, AuthRouter)
+```
+
+31. Register user will only create an account.
+32. Login user : will find the user and generate JWT token if success :
+**AuthController**
+```js
+User.findOne({ email: email }, (error, user) => {
+      // check if user exist 
+      if (error) {
+        response.status(401).send({
+          success: false,
+          message: error.message
+        })
+      } else {
+        if (!user) {
+          response.status(401).send({
+            success: false,
+            message: MesssageProvider
+              .messageByKey(Messages.KEYS.USER_NOT_EXIST)
+          })
+        } else {
+          // check if password matches 
+          user.comparePassword(password, (error, isMatch) => {
+            if (isMatch && !error) {
+
+              // if user is found and password is right create a token
+              //algorithm: process.env.JWT_TOKEN_HASH_ALGO 
+              const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET_OR_KEY, {
+                expiresIn: process.env.JWT_TOKEN_EXPIRATION
+              })
+
+              // return the information including token as JSON
+              response
+                .status(200)
+                .send({
+                  success: true,
+                  user: user,
+                  token: `${process.env.JWT_TOKEN_PREFIX} ${token}`
+                })
+```
+
+33. Results :
+![Screenshot](./assets/images/passport_auth_1.png)
+![Screenshot](./assets/images/passport_auth_2.png) 
 

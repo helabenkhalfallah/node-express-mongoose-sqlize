@@ -71,7 +71,7 @@ const login = async (request, response) => {
   let password = request.body.password || ''
   if (email && password) {
     User.findOne({ email: email }, (error, user) => {
-      // insert only if user not exist 
+      // check if user exist 
       if (error) {
         response.status(401).send({
           success: false,
