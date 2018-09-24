@@ -285,3 +285,22 @@ User.findOne({ email: email }, (error, user) => {
 ![Screenshot](./assets/images/passport_auth_1.png)
 ![Screenshot](./assets/images/passport_auth_2.png) 
 
+34. endpoints :
+**env**
+```js
+// base urls
+AUTH_BASE_PATH = /app/auth
+MONGO_USER_BASE_PATH = /app/mongo/users
+PSQL_USER_BASE_PATH = /app/psql/users
+
+// urls
+AUTH_REGISTER_PATH = /register
+AUTH_LOGIN_PATH = /login
+USER_LIST_PATH = /users-list
+USER_ADD_PATH = /add-user
+USER_UPDATE_PATH = /update-user
+USER_DELETE_PATH = /delete-user
+USER_PROFILE_PATH = /profile
+USER_PROFILE_ID_PATH = /profile-id
+USER_PROFILE_EMAIL_PATH = /profile-email
+```
