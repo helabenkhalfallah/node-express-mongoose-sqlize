@@ -144,8 +144,8 @@ yarn add mocha chai sinon sinon-mongoose
 26. authentication :
 yarn add jsonwebtoken passport passport-local-mongoose bcrypt passport-jwt
 
-27. Passport strategy configuration : 
-/passport/passport.js
+27. passport strategy configuration : 
+**Passport : /passport/passport.js**
 ```js
 let opts = {}
 opts.jwtFromRequest = ExtractJWT.fromAuthHeaderWithScheme(process.env.JWT_SCHEME)
@@ -166,7 +166,8 @@ const passeportJWTStrategy = new JWTStrategy(opts, function (jwt_payload, done) 
 })
 ```
 
-28. Configure server to user passport :
+28. configure server to use passport :
+**server.js**
 ```js
 import passport from 'passport'
 
@@ -174,7 +175,8 @@ import passport from 'passport'
 app.use(passport.initialize())
 ```
 
-29. secure Routers :
+29. secure routers :
+**MgUserRouter.js**
 ```js 
 MgUserRouter.get(process.env.USER_LIST_PATH,
   passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
@@ -202,7 +204,7 @@ app.use(process.env.AUTH_BASE_PATH, AuthRouter)
 ```
 
 31. register user will only create an account if not exist :
-**AuthController**
+**AuthController.js**
 ```js
 User.findOne({ email: email }, (error, user) => {
       // insert only if user not exist
@@ -236,7 +238,7 @@ User.findOne({ email: email }, (error, user) => {
 ```
 
 32. login user : will find the user and generate JWT token if success :
-**AuthController**
+**AuthController.js**
 ```js
 User.findOne({ email: email }, (error, user) => {
       // check if user exist 
