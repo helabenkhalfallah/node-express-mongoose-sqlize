@@ -178,6 +178,12 @@ app.use(passport.initialize())
 29. secure routers :
 **MgUserRouter.js**
 ```js 
+
+// router instance  
+// cast to our passport client
+require('../../../passport/passeport')(passport)
+const MgUserRouter = express.Router()
+
 MgUserRouter.get(process.env.USER_LIST_PATH,
   passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
     const token = AuthUtils.retrieveToken(request.headers)
@@ -196,7 +202,7 @@ MgUserRouter.get(process.env.USER_LIST_PATH,
   })
 ```
 
-30. configure server auth router to use auth middleware :
+30. configure server authentication path to pass through AuthRouter middleware :
 ```js
 //app routes
 // authentication routes

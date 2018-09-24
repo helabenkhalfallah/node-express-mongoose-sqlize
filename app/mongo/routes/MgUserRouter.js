@@ -7,6 +7,7 @@ import Messages from '../../../messages/Messages'
 
 
 // router instance  
+// cast to our passport client
 require('../../../passport/passeport')(passport)
 const MgUserRouter = express.Router()
 
