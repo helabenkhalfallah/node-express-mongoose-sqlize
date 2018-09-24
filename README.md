@@ -201,8 +201,41 @@ MgUserRouter.get(process.env.USER_LIST_PATH,
 app.use(process.env.AUTH_BASE_PATH, AuthRouter)
 ```
 
-31. Register user will only create an account.
-32. Login user : will find the user and generate JWT token if success :
+31. register user will only create an account if not exist :
+**AuthController**
+```js
+User.findOne({ email: email }, (error, user) => {
+      // insert only if user not exist
+      if (error) {
+        response
+          .status(401)
+          .send({
+            success: false,
+            message: error.message
+          })
+      } else {
+        if (!user) {
+          const userModel = UserController.UserFromRequest(request)
+          userModel.save((error) => {
+            if (error) {
+              response
+                .status(401)
+                .send({
+                  success: false,
+                  message: error.message
+                })
+            } else {
+              response
+                .status(200)
+                .send({
+                  success: true,
+                  user: userModel
+                })
+            }
+          })
+```
+
+32. login user : will find the user and generate JWT token if success :
 **AuthController**
 ```js
 User.findOne({ email: email }, (error, user) => {
@@ -240,7 +273,7 @@ User.findOne({ email: email }, (error, user) => {
                 })
 ```
 
-33. Results :
+33. results :
 ![Screenshot](./assets/images/passport_auth_1.png)
 ![Screenshot](./assets/images/passport_auth_2.png) 
 
