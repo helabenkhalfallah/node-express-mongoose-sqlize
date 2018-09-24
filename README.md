@@ -141,4 +141,29 @@ npm install jsonwebtoken --save
 25. add unit test :
 yarn add mocha chai sinon sinon-mongoose
 
+26. authentication :
+yarn add jsonwebtoken passport passport-local-mongoose bcrypt passport-jwt
+
+27. Passport strategy configuration : 
+/passport/passport.js
+```js
+let opts = {}
+opts.jwtFromRequest = ExtractJWT.fromAuthHeaderWithScheme(process.env.JWT_SCHEME)
+opts.secretOrKey = process.env.JWT_SECRET_OR_KEY
+const passeportJWTStrategy = new JWTStrategy(opts, function (jwt_payload, done) {
+  const email = jwt_payload.email
+  User.findOne({ email: email }, (error, user) => {
+    if (error) {
+      return done(error, false)
+    } else {
+      if (user) {
+        done(null, user)
+      } else {
+        done(null, false)
+      }
+    }
+  })
+})
+```
+
 
