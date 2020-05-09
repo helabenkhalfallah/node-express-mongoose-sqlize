@@ -28,7 +28,6 @@
   "homepage": "https://github.com/helabenkhalfallah/node-express-mongoose-sqlize#readme",
   "dependencies": {
     "bcrypt": "^4.0.1",
-    "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
     "chai": "^4.1.2",
     "cookie-parser": "^1.4.3",
