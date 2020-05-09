@@ -1,5 +1,5 @@
 # Description
-This project highlighting how to do a Node JS Rest API with Express, Passport, JWT and MongoDB.
+This project is highlighting how to do a Node JS Rest API with Express, Passport, JWT and MongoDB.
 
 # Principal tools
 - express
