@@ -1,34 +1,41 @@
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
-// verify if token is valid
+/**
+ * verify if token is valid
+ * @param {*} token
+ * @return {boolean}
+ */
 const isValidToken = (token) => {
   try {
-    jwt.verify(token, process.env.JWT_SECRET_OR_KEY)
-    return true
+    jwt.verify(token, process.env.JWT_SECRET_OR_KEY);
+    return true;
   } catch (error) {
     // error
-    return false
+    return false;
   }
-}
+};
 
-// retrieve token from header
+/**
+ * retrieve token from header
+ * @param {*} headers
+ * @return {string} token or null
+ */
 const retrieveToken = (headers) => {
   if (headers && headers.authorization) {
-    let tokens = headers.authorization.split(' ')
+    const tokens = headers.authorization.split(' ');
     if (tokens && tokens.length === 2) {
-      return tokens[1]
+      return tokens[1];
     } else {
-      return null
+      return null;
     }
   } else {
-    return null
+    return null;
   }
-}
+};
 
-// auth utility helper
 const AuthUtils = {
   isValidToken,
   retrieveToken,
-}
+};
 
-export default AuthUtils
+export default AuthUtils;

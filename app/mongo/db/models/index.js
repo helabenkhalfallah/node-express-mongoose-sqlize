@@ -1,7 +1,7 @@
-import UserModel from './UserModel'
+import UserModel from './UserModel';
 
-let MongoModels = {
+const MongoModels = {
   UserModel,
-}
+};
 
-export default MongoModels
+export default MongoModels;

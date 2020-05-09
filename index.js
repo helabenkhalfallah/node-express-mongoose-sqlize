@@ -1,9 +1,10 @@
-//dot env configuration
-import dotenv from 'dotenv'
+// dot env configuration
+import dotenv from 'dotenv';
 
 // load env
-dotenv.load()
+dotenv.config();
 
-//launch server after loading env var
-require('./server/server.js')
+// launch server after loading env var
+require('./server/server.js');
+
 

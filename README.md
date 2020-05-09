@@ -223,7 +223,7 @@ User.findOne({ email: email }, (error, user) => {
           })
       } else {
         if (!user) {
-          const userModel = UserController.UserFromRequest(request)
+          const userModel = UserController.userFromRequest(request)
           userModel.save((error) => {
             if (error) {
               response

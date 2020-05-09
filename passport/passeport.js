@@ -1,38 +1,39 @@
-import passportJWT from 'passport-jwt'
-import MongoModels from '../app/mongo/db/models/index'
+import passportJWT from 'passport-jwt';
+import MongoModels from '../app/mongo/db/models/index';
 
 // passport & jwt config
-const JWTStrategy = passportJWT.Strategy
-const ExtractJWT = passportJWT.ExtractJwt
+const {
+  Strategy: JWTStrategy,
+  ExtractJwt: ExtractJWT,
+} = passportJWT;
 
 // import User model
-const User = MongoModels.UserModel
+const User = MongoModels.UserModel;
 
 // define passeport jwt strategy
-let opts = {}
-opts.jwtFromRequest = ExtractJWT.fromAuthHeaderWithScheme(process.env.JWT_SCHEME)
-opts.secretOrKey = process.env.JWT_SECRET_OR_KEY
-const passeportJWTStrategy = new JWTStrategy(opts, function (jwt_payload, done) {
-  const email = jwt_payload.email
-  User.findOne({ email: email }, (error, user) => {
+const opts = {};
+opts.jwtFromRequest = ExtractJWT.fromAuthHeaderWithScheme(process.env.JWT_SCHEME);
+opts.secretOrKey = process.env.JWT_SECRET_OR_KEY;
+const passeportJWTStrategy = new JWTStrategy(opts, function(jwtPayload, done) {
+  const email = jwtPayload.email;
+  User.findOne({email: email}, (error, user) => {
     if (error) {
-      return done(error, false)
+      return done(error, false);
     } else {
       if (user) {
-        done(null, user)
+        done(null, user);
       } else {
-        done(null, false)
+        done(null, false);
       }
     }
-  })
-})
+  });
+});
 
 // config passport
-module.exports = function (passport) {
-
+module.exports = function(passport) {
   // token strategy
-  passport.use(passeportJWTStrategy)
+  passport.use(passeportJWTStrategy);
 
   // return configured passeport
-  return passport
-}
+  return passport;
+};

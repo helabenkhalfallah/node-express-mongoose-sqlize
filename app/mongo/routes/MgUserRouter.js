@@ -1,106 +1,123 @@
-import express from 'express'
-import UserController from '../controllers/UserController'
-import AuthUtils from '../../authentication/utils/AuthUtils'
-import passport from 'passport'
-import MesssageProvider from '../../../messages/MesssageProvider'
-import Messages from '../../../messages/Messages'
+import express from 'express';
+import UserController from '../controllers/UserController';
+import AuthUtils from '../../authentication/utils/AuthUtils';
+import passport from 'passport';
+import {
+  MesssageProvider,
+  Messages,
+} from '../../../core';
 
+const {
+  Router,
+} = express;
 
-// router instance  
+// router instance
 // cast to our passport client
-require('../../../passport/passeport')(passport)
-const MgUserRouter = express.Router()
+require('../../../passport/passeport')(passport);
 
-// get users list
+// eslint-disable-next-line new-cap
+const MgUserRouter = Router();
+
+/**
+ * Get users list route
+ */
 MgUserRouter.get(process.env.USER_LIST_PATH,
-  passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
-    const token = AuthUtils.retrieveToken(request.headers)
-    if (AuthUtils.isValidToken(token)) {
+    passport.authenticate(process.env.JWT_SCHEME, {session: false}), (request, response) => {
+      const token = AuthUtils.retrieveToken(request.headers);
+      if (AuthUtils.isValidToken(token)) {
       // valid token
-      UserController.find(request, response)
-    } else {
+        UserController.find(request, response);
+      } else {
       // invalid token
-      response
-        .status(401)
-        .send({
-          success: false,
-          message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION)
-        })
-    }
-  })
+        response
+            .status(401)
+            .send({
+              success: false,
+              message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION),
+            });
+      }
+    });
 
-// add a user
+/**
+ * Add new user route
+ */
 MgUserRouter.post(process.env.USER_ADD_PATH,
-  passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
-    const token = AuthUtils.retrieveToken(request.headers)
-    if (AuthUtils.isValidToken(token)) {
+    passport.authenticate(process.env.JWT_SCHEME, {session: false}), (request, response) => {
+      const token = AuthUtils.retrieveToken(request.headers);
+      if (AuthUtils.isValidToken(token)) {
       // valid token
-      UserController.addIfNotExist(request, response)
-    } else {
+        UserController.addIfNotExist(request, response);
+      } else {
       // invalid token
-      response
-        .status(401)
-        .send({
-          success: false,
-          message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION)
-        })
-    }
-  })
+        response
+            .status(401)
+            .send({
+              success: false,
+              message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION),
+            });
+      }
+    });
 
-// update a user if exist
+/**
+ * Update a user if exist route
+ */
 MgUserRouter.post(process.env.USER_UPDATE_PATH,
-  passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
-    UserController.updateIfExist(request, response)
-    const token = AuthUtils.retrieveToken(request.headers)
-    if (AuthUtils.isValidToken(token)) {
+    passport.authenticate(process.env.JWT_SCHEME, {session: false}), (request, response) => {
+      UserController.updateIfExist(request, response);
+      const token = AuthUtils.retrieveToken(request.headers);
+      if (AuthUtils.isValidToken(token)) {
       // valid token
-      UserController.addIfNotExist(request, response)
-    } else {
+        UserController.addIfNotExist(request, response);
+      } else {
       // invalid token
-      response
-        .status(401)
-        .send({
-          success: false,
-          message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION)
-        })
-    }
-  })
+        response
+            .status(401)
+            .send({
+              success: false,
+              message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION),
+            });
+      }
+    });
 
-// delete a user if exist
+/**
+ * Delete a user if exist route
+ */
 MgUserRouter.post(process.env.USER_DELETE_PATH,
-  passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
-    const token = AuthUtils.retrieveToken(request.headers)
-    if (AuthUtils.isValidToken(token)) {
+    passport.authenticate(process.env.JWT_SCHEME, {session: false}), (request, response) => {
+      const token = AuthUtils.retrieveToken(request.headers);
+      if (AuthUtils.isValidToken(token)) {
       // valid token
-      UserController.deleteIfExist(request, response)
-    } else {
+        UserController.deleteIfExist(request, response);
+      } else {
       // invalid token
-      response
-        .status(401)
-        .send({
-          success: false,
-          message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION)
-        })
-    }
-  })
+        response
+            .status(401)
+            .send({
+              success: false,
+              message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION),
+            });
+      }
+    });
 
-// returns the user that made the request
+/**
+ * Returns the user that made the request route (whoami)
+ */
 MgUserRouter.get(process.env.USER_PROFILE_PATH,
-  passport.authenticate(process.env.JWT_SCHEME, { session: false }), (request, response) => {
-    const token = AuthUtils.retrieveToken(request.headers)
-    if (AuthUtils.isValidToken(token)) {
+    passport.authenticate(process.env.JWT_SCHEME, {session: false}), (request, response) => {
+      const token = AuthUtils.retrieveToken(request.headers);
+      if (AuthUtils.isValidToken(token)) {
       // valid token
-      response.send(request.user)
-    } else {
+        response.send(request.user);
+      } else {
       // invalid token
-      response
-        .status(401)
-        .send({
-          success: false,
-          message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION)
-        })
-    }
-  })
+        response
+            .status(401)
+            .send({
+              success: false,
+              message: MesssageProvider.messageByKey(Messages.KEYS.WRONG_SESSION),
+            });
+      }
+    });
 
 
-export default MgUserRouter
+export default MgUserRouter;

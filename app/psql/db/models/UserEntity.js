@@ -1,31 +1,31 @@
-'use strict'
+'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var UserEntity = sequelize.define('UserEntity', {
+  const UserEntity = sequelize.define('UserEntity', {
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
-      required: true
+      required: true,
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
-      required: true
+      required: true,
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       required: true,
       validate: {
-        isEmail: true
-      }
+        isEmail: true,
+      },
     },
     birthday: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
     },
     job: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
     },
     created_at: {
       type: DataTypes.DATE,
@@ -33,11 +33,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     updated_at: {
       type: DataTypes.DATE,
-      field: 'updatedAt'
-    }
-  }, {})
-  UserEntity.associate = function (models) {
+      field: 'updatedAt',
+    },
+  }, {});
+  UserEntity.associate = function(models) {
     // associations can be defined here
-  }
-  return UserEntity
-}
+  };
+  return UserEntity;
+};
