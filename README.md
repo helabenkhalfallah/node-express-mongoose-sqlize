@@ -5,6 +5,7 @@ This project is highlighting how to do a Node JS Rest API with Express, Passport
 - express
 - passport
 - mongoose
+- sequelize
 - jwt
 - bcrypt
 
