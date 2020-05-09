@@ -102,9 +102,11 @@ const login = async (request, response) => {
             if (isMatch && !error) {
               // if user is found and password is right create a token
               // algorithm: process.env.JWT_TOKEN_HASH_ALGO
-              const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET_OR_KEY, {
-                expiresIn: process.env.JWT_TOKEN_EXPIRATION,
-              });
+              const token = jwt.sign(
+                  user.toJSON(),
+                  process.env.JWT_SECRET_OR_KEY, {
+                    expiresIn: process.env.JWT_TOKEN_EXPIRATION,
+                  });
 
               // return the information including token as JSON
               response

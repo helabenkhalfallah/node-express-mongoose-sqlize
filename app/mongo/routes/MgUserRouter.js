@@ -13,7 +13,7 @@ const {
 
 // router instance
 // cast to our passport client
-require('../../../passport/passeport')(passport);
+require('../../../passport/passport')(passport);
 
 // eslint-disable-next-line new-cap
 const MgUserRouter = Router();

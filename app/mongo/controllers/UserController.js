@@ -26,7 +26,7 @@ const isValidUser = (request) => {
 };
 
 /**
- * Retreive user from request
+ * Retrieve user from request
  * @param {*} request
  * @return {object} user or null
  */
@@ -38,7 +38,7 @@ const userFromRequest = (request) => {
 };
 
 /**
- * Retreive all user
+ * Retrieve all user
  * @param {*} request
  * @param {*} response
  */

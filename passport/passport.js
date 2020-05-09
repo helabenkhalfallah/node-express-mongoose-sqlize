@@ -10,11 +10,12 @@ const {
 // import User model
 const User = MongoModels.UserModel;
 
-// define passeport jwt strategy
+// define passport jwt strategy
 const opts = {};
 opts.jwtFromRequest = ExtractJWT.fromAuthHeaderWithScheme(process.env.JWT_SCHEME);
 opts.secretOrKey = process.env.JWT_SECRET_OR_KEY;
-const passeportJWTStrategy = new JWTStrategy(opts, function(jwtPayload, done) {
+const passportJWTStrategy = new JWTStrategy(opts, function(jwtPayload, done) {
+  // retreive mail from jwt payload
   const email = jwtPayload.email;
   User.findOne({email: email}, (error, user) => {
     if (error) {
@@ -32,8 +33,8 @@ const passeportJWTStrategy = new JWTStrategy(opts, function(jwtPayload, done) {
 // config passport
 module.exports = function(passport) {
   // token strategy
-  passport.use(passeportJWTStrategy);
+  passport.use(passportJWTStrategy);
 
-  // return configured passeport
+  // return configured passport
   return passport;
 };

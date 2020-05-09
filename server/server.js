@@ -15,6 +15,7 @@ import {
   AppLogger,
 } from '../core';
 import morgan from 'morgan';
+
 AppLogger.stream = {
   write: function(message, encoding) {
     AppLogger.info(message, encoding);
@@ -23,6 +24,7 @@ AppLogger.stream = {
 
 // database part
 import MongoDBConnect from '../app/mongo/db/db/MongoDBConnect';
+
 if (process.env.MONGOOSE_ENABLED === 'true') {
   AppLogger.debug('server MONGOOSE_ENABLED');
   new MongoDBConnect();
@@ -47,23 +49,23 @@ app.use(bodyParser.json());
 // init and configure passport
 app.use(passport.initialize());
 
-// app routes
 // authentication routes
 app.use(process.env.AUTH_BASE_PATH, AuthRouter);
 
-// others routes
+// app routes
 if (process.env.MONGOOSE_ENABLED === 'true') {
   // mongo routes
   AppLogger.debug('server MONGOOSE_ENABLED');
   app.use(process.env.MONGO_USER_BASE_PATH, MgUserRouter);
 }
+
 if (process.env.PSQL_ENABLED === 'true') {
   // psql routes
   AppLogger.debug('server PSQL_ENABLED');
   app.use(process.env.PSQL_USER_BASE_PATH, PsqlUserRouter);
 }
 
-// route index
+// others routes
 app.get('/', (req, res) => {
   res.send('Invalid endpoint!');
 });

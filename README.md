@@ -150,7 +150,7 @@ yarn add jsonwebtoken passport passport-local-mongoose bcrypt passport-jwt
 let opts = {}
 opts.jwtFromRequest = ExtractJWT.fromAuthHeaderWithScheme(process.env.JWT_SCHEME)
 opts.secretOrKey = process.env.JWT_SECRET_OR_KEY
-const passeportJWTStrategy = new JWTStrategy(opts, function (jwt_payload, done) {
+const passportJWTStrategy = new JWTStrategy(opts, function (jwt_payload, done) {
   const email = jwt_payload.email
   User.findOne({ email: email }, (error, user) => {
     if (error) {
@@ -181,7 +181,7 @@ app.use(passport.initialize())
 
 // router instance  
 // cast to our passport client
-require('../../../passport/passeport')(passport)
+require('../../../passport/passport')(passport)
 const MgUserRouter = express.Router()
 
 MgUserRouter.get(process.env.USER_LIST_PATH,
