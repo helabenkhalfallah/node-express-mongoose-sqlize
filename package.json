@@ -36,7 +36,7 @@
     "express": "^4.16.3",
     "express-jwt": "^5.3.1",
     "jsonwebtoken": "^8.3.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mongoose": "^5.9.13",
     "morgan": "^1.10.0",
     "passport": "^0.4.0",
