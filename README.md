@@ -14,4 +14,4 @@ This project is highlighting how to do a Node JS Rest API with Express, Passport
 
 
 # Detailed setting
-https://github.com/helabenkhalfallah/node-express-mongoose-sqlize/wiki
+https://helabenkhalfallah.medium.com/nodejs-rest-api-with-express-passport-jwt-and-mongodb-98e5f2fee496
