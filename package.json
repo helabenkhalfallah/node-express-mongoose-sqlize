@@ -58,7 +58,7 @@
     "@babel/preset-env": "^7.9.6",
     "eslint": "^7.0.0",
     "eslint-config-google": "^0.14.0",
-    "mocha": "^7.1.2",
+    "mocha": "^10.2.0",
     "nodemon": "^1.17.5"
   }
 }
